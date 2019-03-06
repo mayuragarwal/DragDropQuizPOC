@@ -7,7 +7,7 @@ function quizIsFinished() {
 }
 
 /* Don't change anything below here */
-var dragContentDiv = false;
+var dragContentDiv;
 var dragContent = false;
 
 var dragSource = false;
@@ -43,14 +43,16 @@ function cancelEvent() {
 	return false;
 }
 
-function initDragDrop(e) {
+function initDragDrop(e, questionDivId, answerDivId) {
 	console.log('Inside initDragDrop');
 	if (document.all) e = event;
-	if (lockedAfterDrag && this.parentNode.parentNode.id == 'questionDiv') return;
-	console.log(dragContentDiv);
+	if (lockedAfterDrag && this.parentNode.parentNode.id == questionDivId)
+		return;
+
+	console.log("dragContentDiv: " + dragContentDiv);
 	dragContentDiv.style.left = e.clientX + Math.max(document.documentElement.scrollLeft, document.body.scrollLeft) + 'px';
 	dragContentDiv.style.top = e.clientY + Math.max(document.documentElement.scrollTop, document.body.scrollTop) + 'px';
-	dragSource = this;
+	dragSource = e.currentTarget;
 	dragSourceParent = this.parentNode;
 	dragSourceNextSibling = false;
 	if (this.nextSibling) dragSourceNextSibling = this.nextSibling;
@@ -134,7 +136,7 @@ function dragDropMove(e) {
 }
 
 
-function dragDropEnd() {
+function dragDropEnd(questionDivId, answerDivId) {
 	console.log('Inside dragDropEnd');
 	if (dragDropTimer < 10) {
 		dragDropTimer = -1;
@@ -148,7 +150,7 @@ function dragDropEnd() {
 
 		// Check if position is correct, i.e. correct answer to the question
 
-		if (!destination.id || destination.id != 'answerDiv') {
+		if (!destination.id || destination.id != answerDivId) {
 			var previousEl = dragSource.parentNode.previousSibling;
 			if (!previousEl.tagName) previousEl = previousEl.previousSibling;
 			var numericId = previousEl.id.replace(/[^0-9]/g, '');
@@ -162,7 +164,7 @@ function dragDropEnd() {
 				dragSource.className = 'wrongAnswer';
 		}
 
-		if (destination.id && destination.id == 'answerDiv') {
+		if (destination.id && destination.id == answerDivId) {
 			dragSource.className = 'dragDropSmallBox left-capsule-text';
 		}
 
@@ -209,11 +211,11 @@ function resetPositions() {
 }
 
 
-function initDragDropScript() {
+function initDragDropScript(questionDivId, answerDivId) {
 	console.log('Inside initDragDropScript');
 	dragContentDiv = document.getElementById('dragContent');
 
-	answerDiv = document.getElementById('answerDiv');
+	answerDiv = document.getElementById(answerDivId);
 	answerDiv.onselectstart = cancelEvent;
 	var divs = answerDiv.getElementsByTagName('DIV');
 	var answers = new Array();
@@ -221,7 +223,9 @@ function initDragDropScript() {
 	for (var no = 0; no < divs.length; no++) {
 
 		if (divs[no].className == 'dragDropSmallBox left-capsule-text') {
-			divs[no].onmousedown = initDragDrop;
+			divs[no].onmousedown = function (e) {
+				initDragDrop(e, questionDivId, answerDivId);
+			};
 			answers[answers.length] = divs[no];
 			arrayOfAnswers[arrayOfAnswers.length] = divs[no];
 		}
@@ -242,7 +246,7 @@ function initDragDropScript() {
 	sourceObjectArray['height'] = answerDiv.offsetHeight;
 
 
-	questionDiv = document.getElementById('questionDiv');
+	questionDiv = document.getElementById(questionDivId);
 
 	questionDiv.onselectstart = cancelEvent;
 	var divs = questionDiv.getElementsByTagName('DIV');
@@ -291,7 +295,9 @@ function initDragDropScript() {
 	questionDiv.style.visibility = 'visible';
 	answerDiv.style.visibility = 'visible';
 
-	document.documentElement.onmouseup = dragDropEnd;
+	document.documentElement.onmouseup = function(e) { 
+		dragDropEnd(questionDivId, answerDivId); 
+	};
 	document.documentElement.onmousemove = dragDropMove;
 	setTimeout('resetPositions()', 150);
 	window.onresize = resetPositions;
@@ -306,4 +312,7 @@ function dragDropResetForm() {
 	}
 }
 
-window.onload = initDragDropScript;
+window.onload = function() { 
+	initDragDropScript("questionDiv1", "answerDiv1");
+	initDragDropScript("questionDiv2", "answerDiv2");
+};
