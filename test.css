@@ -7,19 +7,19 @@
     -moz-user-select:no;
 }
 
-#questionDiv{	/* Big div for all the questions */
+.questionDiv{	/* Big div for all the questions */
     float:left;
     height:100%;
     width:150px;
     padding:2px;
 }
-#answerDiv{	/* Big div for all the answers */
+.answerDiv{	/* Big div for all the answers */
     float:right;
     min-width:53px;
     padding:2px;	
 }
 
-#questionDiv div{	/* General rules for small divs - i.e. specific questions and answers */
+.questionDiv div{	/* General rules for small divs - i.e. specific questions and answers */
     min-width:53px;
     min-height:53px;
     line-height:20px;		
@@ -29,7 +29,7 @@
     text-align:center;
 }
 
-#answerDiv div{	/* General rules for small divs - i.e. specific questions and answers */
+.answerDiv div{	/* General rules for small divs - i.e. specific questions and answers */
     min-width:53px;
     min-height:53px;
     line-height:20px;
@@ -54,7 +54,7 @@
     min-height: 53px;
 }
 
-#answerDiv .dragDropSmallBox{	/* Small answer divs */
+.answerDiv .dragDropSmallBox{	/* Small answer divs */
     cursor:pointer;
     background-image: url('CapsuleRight.png');
     background-repeat: no-repeat;
@@ -63,20 +63,20 @@
     padding-left: 5px;
 }
 
-#questionDiv div div{	/* DIV after it has been dragged from right to left box */
+.questionDiv div div{	/* DIV after it has been dragged from right to left box */
     margin:0px;
     border:0px;
     padding:0px;
     background-color:#FFF;
 }
-#questionDiv .destinationBox{	/* Small empty boxes for the questions - i.e. where answers could be dragged */
+.questionDiv .destinationBox{	/* Small empty boxes for the questions - i.e. where answers could be dragged */
     border:0px;
     min-width:53px;
     min-height:63px;
     background-image: url('CapsuleRightDestination.PNG');
     background-repeat: no-repeat;
 }
-#questionDiv .dragContentOver{	/* Small empty boxes for the questions - i.e. where answers could be dragged */
+.questionDiv .dragContentOver{	/* Small empty boxes for the questions - i.e. where answers could be dragged */
     border:0px;
     min-width:53px;
     min-height:63px;
@@ -84,7 +84,7 @@
     background-repeat: no-repeat;
 }
 
-#questionDiv .correctAnswer{	/* CSS indicating correct answer */
+.questionDiv .correctAnswer{	/* CSS indicating correct answer */
     background-image: url('CapsuleRight.PNG');
     min-width:53px;
     min-height:53px;
@@ -92,7 +92,7 @@
     padding-left: 5px;
     background-repeat: no-repeat;
 }
-#questionDiv .wrongAnswer{	/* CSS indicating wrong answer */
+.questionDiv .wrongAnswer{	/* CSS indicating wrong answer */
     background-image: url('CapsuleRight.PNG');
     min-width:53px;
     min-height:53px;
