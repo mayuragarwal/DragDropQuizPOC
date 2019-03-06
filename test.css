@@ -1,8 +1,7 @@
 #dragScriptContainer{	/* BIG DIV containing HTML needed for the entire script */
     width:300px;
     margin:0 auto;
-    border:1px solid #000;
-    height:300px;
+    height:200px;
     margin-top:20px;
     padding:3px;
     -moz-user-select:no;
@@ -12,7 +11,6 @@
     float:left;
     height:100%;
     width:150px;
-    /* border:1px solid #000; */
     padding:2px;
 }
 #answerDiv{	/* Big div for all the answers */
@@ -51,7 +49,6 @@
 }
 
 #dragContent div{	/* Drag content div - i.e. specific answers when they are beeing dragged */
-    border:1px solid #000;
     background-image: url('CapsuleRight.png');
     background-repeat: no-repeat;
     min-height: 53px;
