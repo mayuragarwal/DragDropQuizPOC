@@ -1,0 +1,164 @@
+<html>
+<head>
+
+	<style type="text/css">
+
+	
+	#dragScriptContainer{	/* BIG DIV containing HTML needed for the entire script */
+		width:400px;
+		margin:0 auto;
+		border:1px solid #000;
+		height:400px;
+		margin-top:20px;
+		padding:3px;
+		-moz-user-select:no;
+	}
+	
+	#questionDiv{	/* Big div for all the questions */
+		float:left;
+		height:100%;
+		width:100px;
+		border:1px solid #000;
+		padding:2px;
+	}
+	#answerDiv{	/* Big div for all the answers */
+		float:right;
+		height:100%;
+		width:50px;
+		border:1px solid #000;
+		padding:2px;	
+	}
+	
+	#questionDiv div,#answerDiv div,#dragContent div{	/* General rules for small divs - i.e. specific questions and answers */
+		width:45px;
+		height:20px;
+		line-height:20px;		
+		float:left;
+		margin-right:2px;
+		margin-bottom:2px;
+		text-align:center;
+	}
+	
+	#dragContent div{	/* Drag content div - i.e. specific answers when they are beeing dragged */
+		border:1px solid #000;
+		background-image: url('CapsuleRight.png');
+	    background-repeat: no-repeat;
+	    min-height: 40px;
+	}
+	
+	#answerDiv .dragDropSmallBox{	/* Small answer divs */
+		border:1px solid #000;
+		cursor:pointer;
+		background-image: url('CapsuleRight.png');
+	    background-repeat: no-repeat;
+	    min-height: 40px;
+	}
+	
+	#questionDiv .dragDropSmallBox{	/* Small answer divs */
+		border:1px solid #000;
+		cursor:pointer;
+		background-color:#E2EBED; /* Light blue background color */
+	}
+	
+	#questionDiv div div{	/* DIV after it has been dragged from right to left box */
+		margin:0px;
+		border:0px;
+		padding:0px;
+		background-color:#FFF;
+	}
+	#questionDiv .destinationBox{	/* Small empty boxes for the questions - i.e. where answers could be dragged */
+		border:0px;
+		background-color:#DDD;
+		width:47px;
+		height:22px;
+		
+	
+		
+	}
+	#questionDiv .correctAnswer{	/* CSS indicating correct answer */
+		background-color:green;
+		color:#fff;
+		border:1px solid #000;
+	}
+	#questionDiv .wrongAnswer{	/* CSS indicating wrong answer */
+		background-color:red;
+		color:#fff;
+		border:1px solid #000;
+	}
+
+	#dragContent div{
+		background-color:#FFF;
+	}
+
+	#questionDiv .dragContentOver{	/* Mouse over question boxes - i.e. indicating where dragged element will be appended if mouse button is relased */
+		border:1px solid #F00;
+	}
+	
+	#answerDiv.dragContentOver{	/* Mouse over answer box - i.e. indicating where dragged element will be appended if mouse button is relased */
+		border:1px solid #F00;
+	}
+	
+	/* NEVER CHANGE THIS */
+	#dragContent{
+		position:absolute;
+		display:none;
+	}	
+	
+	.left-capsule {
+	background-image: url('CapsuleLeft.png');
+	background-repeat: no-repeat;
+	min-height: 40px;
+   }
+   
+   .right-capsule {
+	background-image: url('CapsuleRight.png');
+	background-repeat: no-repeat;
+	min-height: 40px;
+}
+	
+	</style>
+	<script src="test.js"></script
+
+
+</head>
+
+<body>
+
+<div id="dragScriptContainer">
+	<div id="questionDiv">
+		
+			<div class="dragDropSmallBox left-capsule" id="q8">5x8</div>
+			<div class="destinationBox"></div>
+		
+		
+			<div class="dragDropSmallBox left-capsule" id="q9">5x9</div>
+			<div class="destinationBox"></div>
+		
+	</div>
+	
+	
+	<div id="answerDiv">
+		
+		<div class="dragDropSmallBox" id="a8">40</div>
+		<div class="dragDropSmallBox" id="a9">45</div>
+		
+	</div>
+</div>
+<div id="dragContent"></div>
+<input type="button" onclick="dragDropResetForm();return false" value="Reset">
+
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
