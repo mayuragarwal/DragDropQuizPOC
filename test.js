@@ -5,7 +5,6 @@ var shuffleQuestions = true;	/* Shuffle questions ? */
 	function quizIsFinished()
 	{
 		// This function is called when everything is solved		
-		
 	}
 	
 	
