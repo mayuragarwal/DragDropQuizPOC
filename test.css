@@ -1,8 +1,8 @@
 #dragScriptContainer{	/* BIG DIV containing HTML needed for the entire script */
-    width:400px;
+    width:300px;
     margin:0 auto;
     border:1px solid #000;
-    height:400px;
+    height:300px;
     margin-top:20px;
     padding:3px;
     -moz-user-select:no;
@@ -11,21 +11,38 @@
 #questionDiv{	/* Big div for all the questions */
     float:left;
     height:100%;
-    width:120px;
+    width:150px;
     /* border:1px solid #000; */
     padding:2px;
 }
 #answerDiv{	/* Big div for all the answers */
     float:right;
-    height:100%;
-    width:50px;
-    border:1px solid #000;
+    min-width:53px;
     padding:2px;	
 }
 
-#questionDiv div,#answerDiv div,#dragContent div{	/* General rules for small divs - i.e. specific questions and answers */
-    width:45px;
-    height:20px;
+#questionDiv div{	/* General rules for small divs - i.e. specific questions and answers */
+    min-width:53px;
+    min-height:53px;
+    line-height:20px;		
+    float:left;
+    margin-right:2px;
+    margin-bottom:2px;
+    text-align:center;
+}
+
+#answerDiv div{	/* General rules for small divs - i.e. specific questions and answers */
+    min-width:53px;
+    min-height:53px;
+    line-height:20px;
+    margin-right:2px;
+    margin-bottom:2px;
+    text-align:center;
+}
+
+#dragContent div{	/* General rules for small divs - i.e. specific questions and answers */
+    min-width:53px;
+    min-height:53px;
     line-height:20px;		
     float:left;
     margin-right:2px;
@@ -37,18 +54,16 @@
     border:1px solid #000;
     background-image: url('CapsuleRight.png');
     background-repeat: no-repeat;
-    min-height: 40px;
+    min-height: 53px;
 }
 
 #answerDiv .dragDropSmallBox{	/* Small answer divs */
-   
     cursor:pointer;
     background-image: url('CapsuleRight.png');
     background-repeat: no-repeat;
-    min-height: 40px;
+    min-height: 53px;
     padding-top: 10px;
     padding-left: 5px;
-    
 }
 
 #questionDiv div div{	/* DIV after it has been dragged from right to left box */
@@ -59,22 +74,31 @@
 }
 #questionDiv .destinationBox{	/* Small empty boxes for the questions - i.e. where answers could be dragged */
     border:0px;
-    width:47px;
-    min-height:40px;
+    min-width:53px;
+    min-height:63px;
     background-image: url('CapsuleRightDestination.PNG');
+    background-repeat: no-repeat;
 }
+#questionDiv .dragContentOver{	/* Small empty boxes for the questions - i.e. where answers could be dragged */
+    border:0px;
+    min-width:53px;
+    min-height:63px;
+    background-image: url('CapsuleRightDestination.PNG');
+    background-repeat: no-repeat;
+}
+
 #questionDiv .correctAnswer{	/* CSS indicating correct answer */
     background-image: url('CapsuleRight.PNG');
-    width:47px;
-    min-height:40px;
+    min-width:53px;
+    min-height:53px;
     padding-top: 10px;
     padding-left: 5px;
     background-repeat: no-repeat;
 }
 #questionDiv .wrongAnswer{	/* CSS indicating wrong answer */
     background-image: url('CapsuleRight.PNG');
-    width:47px;
-    min-height:40px;
+    min-width:53px;
+    min-height:53px;
     padding-top: 10px;
     padding-left: 5px;
     background-repeat: no-repeat;
@@ -97,19 +121,21 @@
 .left-capsule {
 background-image: url('CapsuleLeft.png');
 background-repeat: no-repeat;
-min-height: 40px;
+min-height: 53px;
 min-width: 35px;
 }
 
 .right-capsule {
 background-image: url('CapsuleRight.png');
 background-repeat: no-repeat;
-min-height: 40px;
+min-height: 53px;
 }
-
-
 
 .right-capsule-text {
     padding-top: 10px;
     padding-left: 5px;
+}
+
+.left-capsule-text {
+    padding-top: 10px;
 }
