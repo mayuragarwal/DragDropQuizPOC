@@ -1,6 +1,5 @@
-#dragScriptContainer{	/* BIG DIV containing HTML needed for the entire script */
+.dragScriptContainer{	/* BIG DIV containing HTML needed for the entire script */
     width:300px;
-    margin:0 auto;
     height:200px;
     margin-top:20px;
     padding:3px;
@@ -19,7 +18,7 @@
     padding:2px;	
 }
 
-.questionDiv div{	/* General rules for small divs - i.e. specific questions and answers */
+.questionDiv div{	
     min-width:53px;
     min-height:53px;
     line-height:20px;		
@@ -29,7 +28,7 @@
     text-align:center;
 }
 
-.answerDiv div{	/* General rules for small divs - i.e. specific questions and answers */
+.answerDiv div{	
     min-width:53px;
     min-height:53px;
     line-height:20px;
@@ -38,7 +37,12 @@
     text-align:center;
 }
 
-#dragContent div{	/* General rules for small divs - i.e. specific questions and answers */
+.dragContent {
+    position:absolute;
+    display:none;
+}
+
+.dragContent div {	
     min-width:53px;
     min-height:53px;
     line-height:20px;		
@@ -46,9 +50,7 @@
     margin-right:2px;
     margin-bottom:2px;
     text-align:center;
-}
-
-#dragContent div{	/* Drag content div - i.e. specific answers when they are beeing dragged */
+    background-color:#FFF;
     background-image: url('CapsuleRight.png');
     background-repeat: no-repeat;
     min-height: 53px;
@@ -84,16 +86,8 @@
     background-repeat: no-repeat;
 }
 
-.questionDiv .correctAnswer{	/* CSS indicating correct answer */
-    background-image: url('CapsuleRight.PNG');
-    min-width:53px;
-    min-height:53px;
-    padding-top: 10px;
-    padding-left: 5px;
-    background-repeat: no-repeat;
-    font-size: x-small;
-}
-.questionDiv .wrongAnswer{	/* CSS indicating wrong answer */
+/* CSS indicating correct answer */
+/* .questionDiv .correctAnswer{	
     background-image: url('CapsuleRight.PNG');
     min-width:53px;
     min-height:53px;
@@ -103,19 +97,20 @@
     font-size: x-small;
 }
 
-#dragContent div{
-    background-color:#FFF;
-}
+ CSS indicating wrong answer 
+.questionDiv .wrongAnswer{
+    background-image: url('CapsuleRight.PNG');
+    min-width:53px;
+    min-height:53px;
+    padding-top: 10px;
+    padding-left: 5px;
+    background-repeat: no-repeat;
+    font-size: x-small;
+} */
 
 .clearfix {
     overflow: auto;
-  }
-
-/* NEVER CHANGE THIS */
-#dragContent{
-    position:absolute;
-    display:none;
-}	
+  }	
 
 .left-capsule {
 background-image: url('CapsuleLeft.png');
