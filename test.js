@@ -6,7 +6,6 @@ function quizIsFinished() {
 	// This function is called when everything is solved		
 }
 
-
 /* Don't change anything below here */
 var dragContentDiv = false;
 var dragContent = false;
@@ -107,18 +106,18 @@ function dragDropMove(e) {
 		var width = destinationObjArray[no]['width'];
 		var height = destinationObjArray[no]['height'];
 
-		destinationObjArray[no]['obj'].className = 'destinationBox';
+		destinationObjArray[no]['obj'].className = 'destinationBox answerDiv';
 		var subs = destinationObjArray[no]['obj'].getElementsByTagName('DIV');
 		if (!objFound && subs.length == 0) {
 			if (mouseX < (left / 1 + width / 1) && (mouseX + dragWidth / 1) > left && mouseY < (top / 1 + height / 1) && (mouseY + dragHeight / 1) > top) {
-				destinationObjArray[no]['obj'].className = 'dragContentOver';
+				destinationObjArray[no]['obj'].className = 'dragContentOver answerDiv';
 				destination = destinationObjArray[no]['obj'];
 				objFound = true;
 			}
 		}
 	}
 
-	sourceObjectArray['obj'].className = '';
+	//sourceObjectArray['obj'].className = '';
 
 	if (!objFound) {
 		var left = sourceObjectArray['left'];
@@ -128,7 +127,7 @@ function dragDropMove(e) {
 
 		if (mouseX < (left / 1 + width / 1) && (mouseX + dragWidth / 1) > left && mouseY < (top / 1 + height / 1) && (mouseY + dragHeight / 1) > top) {
 			destination = sourceObjectArray['obj'];
-			sourceObjectArray['obj'].className = 'dragContentOver';
+			sourceObjectArray['obj'].className = 'dragContentOver answerDiv';
 		}
 	}
 	return false;
@@ -145,7 +144,7 @@ function dragDropEnd() {
 	sourceObjectArray['obj'].style.backgroundColor = '#FFF';
 	if (destination) {
 		destination.appendChild(dragSource);
-		destination.className = 'destinationBox';
+		destination.className = 'destinationBox answerDiv';
 
 		// Check if position is correct, i.e. correct answer to the question
 
