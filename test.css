@@ -65,48 +65,26 @@
     padding-left: 5px;
 }
 
-.questionDiv div div{	/* DIV after it has been dragged from right to left box */
+.questionDiv div div {	/* DIV after it has been dragged from right to left box */
     margin:0px;
     border:0px;
     padding:0px;
     background-color:#FFF;
 }
-.questionDiv .destinationBox{	/* Small empty boxes for the questions - i.e. where answers could be dragged */
+.questionDiv .destinationBox {	/* css to show destination image when answer not dropped yet */
     border:0px;
     min-width:53px;
     min-height:63px;
     background-image: url('CapsuleRightDestination.PNG');
     background-repeat: no-repeat;
 }
-.questionDiv .dragContentOver{	/* Small empty boxes for the questions - i.e. where answers could be dragged */
+.questionDiv .dragContentOver {	/* css when moving answer to destination to keep destination image showing */
     border:0px;
     min-width:53px;
     min-height:63px;
     background-image: url('CapsuleRightDestination.PNG');
     background-repeat: no-repeat;
 }
-
-/* CSS indicating correct answer */
-/* .questionDiv .correctAnswer{	
-    background-image: url('CapsuleRight.PNG');
-    min-width:53px;
-    min-height:53px;
-    padding-top: 10px;
-    padding-left: 5px;
-    background-repeat: no-repeat;
-    font-size: x-small;
-}
-
- CSS indicating wrong answer 
-.questionDiv .wrongAnswer{
-    background-image: url('CapsuleRight.PNG');
-    min-width:53px;
-    min-height:53px;
-    padding-top: 10px;
-    padding-left: 5px;
-    background-repeat: no-repeat;
-    font-size: x-small;
-} */
 
 .clearfix {
     overflow: auto;
@@ -135,3 +113,12 @@ min-height: 53px;
     padding-top: 10px;
     font-size: x-small;
 }
+
+.abc {
+    background-color: aqua;
+}
+
+.zigzag-left {
+    background: linear-gradient(-137deg, #e8117f 6px, transparent 0) 0 5px, 
+    linear-gradient(320deg, #e8117f 5px, #fff 0) 0 5px;
+ }

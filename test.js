@@ -40,14 +40,13 @@ function initDragDropScript(containerDivId, dragContentDivId, questionDivId, ans
 
 	for (var no = 0; no < divs.length; no++) {
 
-		if (divs[no].className == 'dragDropSmallBox left-capsule-text') {
+		if (hasClass(divs[no], 'dragDropSmallBox')) {
 			divs[no].onmousedown = function (e) {
 				initDragDrop(e, containerDivId, questionDivId, answerDivId);
 			};
 			answers[answers.length] = divs[no];
 			arrayOfAnswers[arrayOfAnswers.length] = divs[no];
 		}
-
 	}
 
 	if (shuffleAnswers) {
@@ -63,7 +62,6 @@ function initDragDropScript(containerDivId, dragContentDivId, questionDivId, ans
 	sourceObjectArray['width'] = answerDiv.offsetWidth;
 	sourceObjectArray['height'] = answerDiv.offsetHeight;
 
-
 	questionDiv = document.getElementById(questionDivId);
 
 	questionDiv.onselectstart = cancelEvent;
@@ -72,9 +70,8 @@ function initDragDropScript(containerDivId, dragContentDivId, questionDivId, ans
 	var questions = new Array();
 	var questionsOpenBoxes = new Array();
 
-
 	for (var no = 0; no < divs.length; no++) {
-		if (divs[no].className == 'destinationBox') {
+		if (hasClass(divs[no], 'destinationBox')) {
 			var index = destinationObjArray.length;
 			destinationObjArray[index] = new Array();
 			destinationObjArray[index]['obj'] = divs[no];
@@ -85,10 +82,10 @@ function initDragDropScript(containerDivId, dragContentDivId, questionDivId, ans
 			questionsOpenBoxes[questionsOpenBoxes.length] = divs[no];
 			arrayOfEmptyBoxes[arrayOfEmptyBoxes.length] = divs[no];
 		}
-		if (divs[no].className == 'dragDropSmallBox left-capsule-text') {
+
+		if (hasClass(divs[no], 'dragDropSmallBox')) {
 			questions[questions.length] = divs[no];
 		}
-
 	}
 
 	if (shuffleQuestions) {
@@ -124,7 +121,8 @@ function initDragDropScript(containerDivId, dragContentDivId, questionDivId, ans
 
 function getTopPos(inputObj) {
 	console.log('Inside getTopPos');
-	if (!inputObj || !inputObj.offsetTop) return 0;
+	if (!inputObj || !inputObj.offsetTop)
+		return 0;
 	var returnValue = inputObj.offsetTop;
 	while ((inputObj = inputObj.offsetParent) != null) returnValue += inputObj.offsetTop;
 	return returnValue;
@@ -132,7 +130,8 @@ function getTopPos(inputObj) {
 
 function getLeftPos(inputObj) {
 	console.log('Inside getLeftPos');
-	if (!inputObj || !inputObj.offsetLeft) return 0;
+	if (!inputObj || !inputObj.offsetLeft)
+		return 0;
 	var returnValue = inputObj.offsetLeft;
 	while ((inputObj = inputObj.offsetParent) != null) returnValue += inputObj.offsetLeft;
 	return returnValue;
@@ -145,7 +144,6 @@ function cancelEvent() {
 
 function initDragDrop(e, containerDivId, questionDivId, answerDivId) {
 	console.log('Inside initDragDrop');
-	//if (document.all) e = event;
 
 	if (lockedAfterDrag && e.currentTarget.parentNode.parentNode.id == questionDivId)
 		return;
@@ -167,7 +165,7 @@ function initDragDrop(e, containerDivId, questionDivId, answerDivId) {
 }
 
 function timeoutBeforeDrag() {
-	
+
 	if (dragDropTimer >= 0 && dragDropTimer < 10) {
 		dragDropTimer = dragDropTimer + 1;
 		setTimeout('timeoutBeforeDrag()', 10);
@@ -188,7 +186,6 @@ function dragDropMove(e, containerDivId, dragContentDivId) {
 	}
 
 	console.log('Inside dragDropMove');
-	//if (document.all) e = event;
 
 	var containerDivRect = document.getElementById(containerDivId).getBoundingClientRect();
 	var dragContentDivRect = document.getElementById(dragContentDivId).getBoundingClientRect();
@@ -202,7 +199,6 @@ function dragDropMove(e, containerDivId, dragContentDivId) {
 	var dragWidth = dragSource.offsetWidth;
 	var dragHeight = dragSource.offsetHeight;
 
-
 	var objFound = false;
 
 	var mouseX = e.clientX;
@@ -215,18 +211,20 @@ function dragDropMove(e, containerDivId, dragContentDivId) {
 		var width = destinationObjArray[no]['width'];
 		var height = destinationObjArray[no]['height'];
 
-		destinationObjArray[no]['obj'].className = 'destinationBox answerDiv';
+		addClass(destinationObjArray[no]['obj'], 'destinationBox');
+
 		var subs = destinationObjArray[no]['obj'].getElementsByTagName('DIV');
 		if (!objFound && subs.length == 0) {
-			if (mouseX < (left / 1 + width / 1) && (mouseX + dragWidth / 1) > left && mouseY < (top / 1 + height / 1) && (mouseY + dragHeight / 1) > top) {
-				destinationObjArray[no]['obj'].className = 'dragContentOver answerDiv';
+			if (mouseX < (left / 1 + width / 1) && (mouseX + dragWidth / 1) > left
+				&& mouseY < (top / 1 + height / 1) && (mouseY + dragHeight / 1) > top) {
+
+				removeClass(destinationObjArray[no]['obj'], 'destinationBox');
+				addClass(destinationObjArray[no]['obj'], 'dragContentOver');
 				destination = destinationObjArray[no]['obj'];
 				objFound = true;
 			}
 		}
 	}
-
-	//sourceObjectArray['obj'].className = '';
 
 	if (!objFound) {
 		var left = sourceObjectArray['left'];
@@ -236,12 +234,12 @@ function dragDropMove(e, containerDivId, dragContentDivId) {
 
 		if (mouseX < (left / 1 + width / 1) && (mouseX + dragWidth / 1) > left && mouseY < (top / 1 + height / 1) && (mouseY + dragHeight / 1) > top) {
 			destination = sourceObjectArray['obj'];
-			sourceObjectArray['obj'].className = 'dragContentOver answerDiv';
+			addClass(sourceObjectArray['obj'], 'dragContentOver');
 		}
 	}
+
 	return false;
 }
-
 
 function dragDropEnd(e, questionDivId, answerDivId) {
 	console.log('Inside dragDropEnd');
@@ -253,53 +251,24 @@ function dragDropEnd(e, questionDivId, answerDivId) {
 	sourceObjectArray['obj'].style.backgroundColor = '#FFF';
 	if (destination) {
 		destination.appendChild(dragSource);
-		destination.className = 'destinationBox answerDiv';
-
-		// Check if position is correct, i.e. correct answer to the question
-
-		// if (!destination.id || destination.id != answerDivId) {
-		// 	var previousEl = dragSource.parentNode.previousSibling;
-		// 	if (!previousEl.tagName) previousEl = previousEl.previousSibling;
-		// 	var numericId = previousEl.id.replace(/[^0-9]/g, '');
-		// 	var numericIdSource = dragSource.id.replace(/[^0-9]/g, '');
-
-		// 	if (numericId == numericIdSource) {
-		// 		dragSource.className = 'correctAnswer';
-		// 		checkAllAnswers();
-		// 	}
-		// 	else
-		// 		dragSource.className = 'wrongAnswer';
-		// }
+		removeClass(destination, 'dragContentOver');
+		addClass(destination, 'destinationBox');
+		addClass(destination, 'answerDiv');
 
 		if (destination.id && destination.id == answerDivId) {
-			dragSource.className = 'dragDropSmallBox left-capsule-text';
+			addClass(dragSource, 'dragDropSmallBox');
 		}
-
 	} else {
 		if (dragSourceNextSibling)
 			dragSourceNextSibling.parentNode.insertBefore(dragSource, dragSourceNextSibling);
 		else
 			dragSourceParent.appendChild(dragSource);
 	}
+
 	dragDropTimer = -1;
 	dragSourceNextSibling = false;
 	dragSourceParent = false;
 	destination = false;
-}
-
-function checkAllAnswers() {
-	console.log('Inside checkAllAnswers');
-	for (var no = 0; no < arrayOfEmptyBoxes.length; no++) {
-		var sub = arrayOfEmptyBoxes[no].getElementsByTagName('DIV');
-		if (sub.length == 0) return;
-
-		if (sub[0].className != 'correctAnswer') {
-			return;
-		}
-
-	}
-
-	quizIsFinished();
 }
 
 function resetPositions() {
@@ -311,7 +280,6 @@ function resetPositions() {
 			destinationObjArray[no]['left'] = getLeftPos(destinationObjArray[no]['obj'])
 			destinationObjArray[no]['top'] = getTopPos(destinationObjArray[no]['obj'])
 		}
-
 	}
 	sourceObjectArray['left'] = getLeftPos(answerDiv);
 	sourceObjectArray['top'] = getTopPos(answerDiv);
@@ -321,7 +289,29 @@ function resetPositions() {
 function dragDropResetForm() {
 	console.log('Inside dragDropResetForm');
 	for (var no = 0; no < arrayOfAnswers.length; no++) {
-		arrayOfAnswers[no].className = 'dragDropSmallBox left-capsule-text'
+		addClass(arrayOfAnswers[no], 'dragDropSmallBox');
 		answerDiv.appendChild(arrayOfAnswers[no]);
+	}
+}
+
+function hasClass(el, className) {
+	if (el.classList)
+		return el.classList.contains(className);
+	return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+}
+
+function addClass(el, className) {
+	if (el.classList)
+		el.classList.add(className)
+	else if (!hasClass(el, className))
+		el.className += " " + className;
+}
+
+function removeClass(el, className) {
+	if (el.classList)
+		el.classList.remove(className)
+	else if (hasClass(el, className)) {
+		var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+		el.className = el.className.replace(reg, ' ');
 	}
 }
