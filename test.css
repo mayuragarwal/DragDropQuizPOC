@@ -9,7 +9,7 @@
 .questionDiv{	/* Big div for all the questions */
     float:left;
     height:100%;
-    width:150px;
+    width:80px;
     padding:2px;
 }
 .answerDiv{	/* Big div for all the answers */
@@ -23,8 +23,8 @@
     min-height:53px;
     line-height:20px;		
     float:left;
-    margin-right:2px;
     margin-bottom:2px;
+    margin-right:-18px;
     text-align:center;
 }
 
@@ -51,39 +51,52 @@
     margin-bottom:2px;
     text-align:center;
     background-color:#FFF;
-    background-image: url('CapsuleRight.png');
+    background-image: url('images/CapsuleRight.png');
     background-repeat: no-repeat;
     min-height: 53px;
 }
 
-.answerDiv .dragDropSmallBox{	/* Small answer divs */
+.questionDiv .answerDiv .dragDropSmallBox {	/* Small answer divs */
     cursor:pointer;
-    background-image: url('CapsuleRight.png');
+    background-image: url('images/CapsuleRightDestinationDropped.png');
     background-repeat: no-repeat;
     min-height: 53px;
     padding-top: 10px;
     padding-left: 5px;
 }
 
-.questionDiv div div {	/* DIV after it has been dragged from right to left box */
+.answerDiv .dragDropSmallBox {	/* Small answer divs */
+    cursor:pointer;
+    background-image: url('images/CapsuleRight.png');
+    background-repeat: no-repeat;
+    min-height: 53px;
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+
+.questionDiv div div {	 /*DIV after it has been dragged from right to left box */
     margin:0px;
     border:0px;
     padding:0px;
     background-color:#FFF;
 }
+
 .questionDiv .destinationBox {	/* css to show destination image when answer not dropped yet */
     border:0px;
     min-width:53px;
     min-height:63px;
-    background-image: url('CapsuleRightDestination.PNG');
+    background-image: url('images/CapsuleRightDestination.PNG');
     background-repeat: no-repeat;
+    margin-left: -4px;
 }
 .questionDiv .dragContentOver {	/* css when moving answer to destination to keep destination image showing */
     border:0px;
     min-width:53px;
     min-height:63px;
-    background-image: url('CapsuleRightDestination.PNG');
+    background-image: url('images/CapsuleRightDestination.PNG');
     background-repeat: no-repeat;
+    margin-left: -4px;
 }
 
 .clearfix {
@@ -91,14 +104,14 @@
   }	
 
 .left-capsule {
-background-image: url('CapsuleLeft.png');
+background-image: url('images/CapsuleLeft.png');
 background-repeat: no-repeat;
 min-height: 53px;
 min-width: 35px;
 }
 
 .right-capsule {
-background-image: url('CapsuleRight.png');
+background-image: url('images/CapsuleRight.png');
 background-repeat: no-repeat;
 min-height: 53px;
 }
