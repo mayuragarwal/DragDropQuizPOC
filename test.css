@@ -10,15 +10,14 @@
     float:right;	
 }
 
-.questionDiv {
-    float:left;
+.answerOptionContainer {
+    margin-bottom:10px;
 }
 
-.answerDiv .dragDropAnswerBox {
+.dragDropAnswerBox {
     cursor:pointer;
     border: 2px solid;
     min-width:50px;
-    margin-bottom:10px;
     padding: 10px;
     line-height:20px;
     border-top-right-radius: 25px;
@@ -26,7 +25,12 @@
     border-color: lightblue;
 }
 
-.questionDiv .questionOptionBox {	
+.questionDiv {
+    float:left;
+    min-width: 150px;
+}
+
+.questionOptionContainer {	
     min-width:100px;
     line-height:20px;
     margin-bottom:10px;
@@ -45,7 +49,7 @@
     border-color: lightgreen;
 }
 
-.questionDiv .destinationBox {	/* css to show destination image when answer not dropped yet */
+.destinationQuestionBox .emptyQuestionBox {	
     border: 2px solid;
     color: black;
     padding: 10px 20px;
@@ -58,28 +62,28 @@
     border-bottom-right-radius: 25px;
     border-color: lightgrey;
     min-height: 20px;
+    min-width: 30px;
 }
 
+.destinationQuestionBox .dragDropAnswerBox {
+    border: 2px solid;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
 
-
-
-
-
+    cursor: pointer;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    min-height: 20px;
+    min-width: 30px;
+    border-color: lightblue;
+}
 
 .dragContent {
     position:absolute;
     display:none;
-}
-
-.dragContent div {	
-    min-width:50px;
-    line-height:20px;
-    cursor:pointer;
-    border: 2px solid;
-    padding: 10px 20px;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-color: lightblue;
 }
 
 .questionDiv .answerDiv .dragDropAnswerBox {
@@ -109,7 +113,7 @@
     border-color: lightblue;
 }
 
-.right-capsule-text {
+.answerOption-text {
     padding-top: 10px;
     text-align: center;
 }
