@@ -86,33 +86,6 @@
     display:none;
 }
 
-.questionDiv .answerDiv .dragDropAnswerBox {
-    cursor:pointer;
-    border: 2px solid;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-color: lightblue;
-}
-
-.questionDiv .dragContentOver {
-    border: 2px solid;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-color: lightblue;
-}
-
 .answerOption-text {
     padding-top: 10px;
     text-align: center;
@@ -122,12 +95,3 @@
     padding-top: 10px;
     text-align: center;
 }
-
-.abc {
-    background-color: aqua;
-}
-
-.zigzag-left {
-    background: linear-gradient(-137deg, #e8117f 6px, transparent 0) 0 5px, 
-    linear-gradient(320deg, #e8117f 5px, #fff 0) 0 5px;
- }
