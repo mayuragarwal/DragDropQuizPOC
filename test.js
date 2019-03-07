@@ -1,5 +1,3 @@
-var shuffleQuestions = false;	/* Shuffle questions ? */
-var shuffleAnswers = false;	/* Shuffle answers ? */
 var lockedAfterDrag = false;	/* Lock items after they have been dragged, i.e. the user get's only one shot for the correct answer */
 
 var dragContent = false;
@@ -9,16 +7,14 @@ var destinationObjArray = new Array();
 var destination = false;
 var dragSourceParent = false;
 var dragSourceNextSibling = false;
-var answerDiv;
-var questionDiv;
 var sourceObjectArray = new Array();
-var arrayOfEmptyBoxes = new Array();
-var arrayOfAnswers = new Array();
 
 var containerDivPrefix = "dragContainer-";
 var dragContentDivPrefix = "dragContent-";
 var questionDivPrefix = "questionDiv-";
 var answerDivPrefix = "answerDiv-";
+
+var currentDragQuestion = null;
 
 window.onload = function () {
 	initDragDropScript("q1");
@@ -36,7 +32,7 @@ function initDragDropScript(questionId) {
 
 	var containerDivRect = document.getElementById(containerDivId).getBoundingClientRect();
 
-	answerDiv = document.getElementById(answerDivId);
+	var answerDiv = document.getElementById(answerDivId);
 	answerDiv.onselectstart = cancelEvent;
 	var divs = answerDiv.getElementsByTagName('DIV');
 	var answers = new Array();
@@ -48,25 +44,19 @@ function initDragDropScript(questionId) {
 				initDragDrop(e, questionId);
 			};
 			answers[answers.length] = divs[no];
-			arrayOfAnswers[arrayOfAnswers.length] = divs[no];
 		}
 	}
 
-	if (shuffleAnswers) {
-		for (var no = 0; no < (answers.length * 10); no++) {
-			var randomIndex = Math.floor(Math.random() * answers.length);
-			answerDiv.appendChild(answers[randomIndex]);
-		}
-	}
+	var sourceObj = new Array();
+	sourceObj['qid'] = questionId;
+	sourceObj['obj'] = answerDiv;
+	sourceObj['left'] = getLeftPos(answerDiv);
+	sourceObj['top'] = getTopPos(answerDiv);
+	sourceObj['width'] = answerDiv.offsetWidth;
+	sourceObj['height'] = answerDiv.offsetHeight;
+	sourceObjectArray[sourceObjectArray.length] = sourceObj;
 
-	sourceObjectArray['obj'] = answerDiv;
-	sourceObjectArray['left'] = getLeftPos(answerDiv);
-	sourceObjectArray['top'] = getTopPos(answerDiv);
-	sourceObjectArray['width'] = answerDiv.offsetWidth;
-	sourceObjectArray['height'] = answerDiv.offsetHeight;
-
-	questionDiv = document.getElementById(questionDivId);
-
+	var questionDiv = document.getElementById(questionDivId);
 	questionDiv.onselectstart = cancelEvent;
 	var divs = questionDiv.getElementsByTagName('DIV');
 
@@ -84,16 +74,12 @@ function initDragDropScript(questionId) {
 			destinationObjArray[index]['width'] = divs[no].offsetWidth;
 			destinationObjArray[index]['height'] = divs[no].offsetHeight;
 			questionsOpenBoxes[questionsOpenBoxes.length] = divs[no];
-			arrayOfEmptyBoxes[arrayOfEmptyBoxes.length] = divs[no];
 		}
 
 		if (hasClass(divs[no], 'dragDropSmallBox')) {
 			questions[questions.length] = divs[no];
 		}
 	}
-
-	questionDiv.style.visibility = 'visible';
-	answerDiv.style.visibility = 'visible';
 
 	var containerDiv = document.getElementById(containerDivId);
 	containerDiv.onmouseup = function (e) {
@@ -102,13 +88,12 @@ function initDragDropScript(questionId) {
 	containerDiv.onmousemove = function (e) {
 		dragDropMove(e, questionId);
 	};
-	setTimeout('resetPositions()', 150);
-	window.onresize = resetPositions;
 }
 
 function initDragDrop(e, questionId) {
 	console.log('Inside initDragDrop');
 
+	currentDragQuestion = questionId;
 	var containerDivId = containerDivPrefix + questionId;
 	var questionDivId = questionDivPrefix + questionId;
 	var dragContentDivId = dragContentDivPrefix + questionId;
@@ -158,7 +143,7 @@ function dragDropMove(e, questionId) {
 		return;
 	}
 
-	if (!hasClass(e.target, questionId)) {
+	if (currentDragQuestion != questionId || !hasClass(e.target, questionId)) {
 		return;
 	}
 
@@ -210,15 +195,16 @@ function dragDropMove(e, questionId) {
 	}
 
 	if (!objFound) {
-		var left = sourceObjectArray['left'];
-		var top = sourceObjectArray['top'];
-		var width = sourceObjectArray['width'];
-		var height = sourceObjectArray['height'];
+		var sourceObj = sourceObjectArray.find(obj => obj['qid'] == questionId);
+		var left = sourceObj['left'];
+		var top = sourceObj['top'];
+		var width = sourceObj['width'];
+		var height = sourceObj['height'];
 
 		if (mouseX < (left / 1 + width / 1) && (mouseX + dragWidth / 1) > left && mouseY < (top / 1 + height / 1) && (mouseY + dragHeight / 1) > top) {
-			destination = sourceObjectArray['obj'];
+			destination = sourceObj['obj'];
 			console.log("Inside !objFound", destination);
-			addClass(sourceObjectArray['obj'], 'dragContentOver');
+			addClass(sourceObj['obj'], 'dragContentOver');
 		}
 	}
 
@@ -240,7 +226,6 @@ function dragDropEnd(e, questionId) {
 	var dragContentDiv = document.getElementById(dragContentDivId);
 
 	dragContentDiv.style.display = 'none';
-	sourceObjectArray['obj'].style.backgroundColor = '#FFF';
 	if (destination) {
 		destination.appendChild(dragSource);
 		removeClass(destination, 'dragContentOver');
@@ -261,6 +246,7 @@ function dragDropEnd(e, questionId) {
 	dragSourceNextSibling = false;
 	dragSourceParent = false;
 	destination = false;
+	currentDragQuestion = null;
 }
 
 function getTopPos(inputObj) {
@@ -284,29 +270,6 @@ function getLeftPos(inputObj) {
 function cancelEvent() {
 	console.log('Inside cancelEvent');
 	return false;
-}
-
-function resetPositions() {
-	console.log('Inside resetPositions');
-	if (dragDropTimer >= 10) return;
-
-	for (var no = 0; no < destinationObjArray.length; no++) {
-		if (destinationObjArray[no]['obj']) {
-			destinationObjArray[no]['left'] = getLeftPos(destinationObjArray[no]['obj'])
-			destinationObjArray[no]['top'] = getTopPos(destinationObjArray[no]['obj'])
-		}
-	}
-	sourceObjectArray['left'] = getLeftPos(answerDiv);
-	sourceObjectArray['top'] = getTopPos(answerDiv);
-}
-
-/* Reset the form */
-function dragDropResetForm() {
-	console.log('Inside dragDropResetForm');
-	for (var no = 0; no < arrayOfAnswers.length; no++) {
-		addClass(arrayOfAnswers[no], 'dragDropSmallBox');
-		answerDiv.appendChild(arrayOfAnswers[no]);
-	}
 }
 
 function hasClass(el, className) {
