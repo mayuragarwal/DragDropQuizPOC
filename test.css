@@ -1,4 +1,4 @@
-.dragScriptContainer {	/* BIG DIV containing HTML needed for the entire script */
+.dragContainer {	/* BIG DIV containing HTML needed for the entire script */
     width:300px;
     height:200px;
     margin-top:20px;
@@ -27,7 +27,7 @@
     margin-right:-18px;
 }
 
-.answerDiv div{	
+.answerDiv div {	
     min-width:53px;
     min-height:53px;
     line-height:20px;
@@ -87,7 +87,7 @@
 
 .clearfix {
     overflow: auto;
-  }	
+}	
 
 .left-capsule {
 background-image: url('images/CapsuleLeft.png');
