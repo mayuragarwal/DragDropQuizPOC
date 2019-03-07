@@ -39,7 +39,7 @@ function initDragDropScript(questionId) {
 
 	for (var no = 0; no < divs.length; no++) {
 
-		if (hasClass(divs[no], 'dragDropSmallBox')) {
+		if (hasClass(divs[no], 'dragDropAnswerBox')) {
 			divs[no].onmousedown = function (e) {
 				initDragDrop(e, questionId);
 			};
@@ -76,7 +76,7 @@ function initDragDropScript(questionId) {
 			questionsOpenBoxes[questionsOpenBoxes.length] = divs[no];
 		}
 
-		if (hasClass(divs[no], 'dragDropSmallBox')) {
+		if (hasClass(divs[no], 'dragDropAnswerBox')) {
 			questions[questions.length] = divs[no];
 		}
 	}
@@ -233,7 +233,7 @@ function dragDropEnd(e, questionId) {
 		addClass(destination, 'answerDiv');
 
 		if (destination.id && destination.id == answerDivId) {
-			addClass(dragSource, 'dragDropSmallBox');
+			addClass(dragSource, 'dragDropAnswerBox');
 		}
 	} else {
 		if (dragSourceNextSibling)
