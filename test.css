@@ -6,11 +6,12 @@
     -moz-user-select:no;
 }
 
-.questionDiv {
-    float:left;
-}
 .answerDiv {
     float:right;	
+}
+
+.questionDiv {
+    float:left;
 }
 
 .answerDiv .dragDropAnswerBox {
@@ -30,6 +31,40 @@
     line-height:20px;
     margin-bottom:10px;
 }
+
+.staticQuestionBox {
+    float:left;
+    border: 2px solid;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-color: lightgreen;
+}
+
+.questionDiv .destinationBox {	/* css to show destination image when answer not dropped yet */
+    border: 2px solid;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+
+    cursor: pointer;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-color: lightgrey;
+    min-height: 20px;
+}
+
+
+
+
+
+
 
 .dragContent {
     position:absolute;
@@ -61,48 +96,7 @@
     border-color: lightblue;
 }
 
-.questionDiv .destinationBox {	/* css to show destination image when answer not dropped yet */
-    border: 2px solid;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-
-    cursor: pointer;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-color: lightgrey;
-    min-height: 20px;
-}
-
 .questionDiv .dragContentOver {
-    border: 2px solid;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-color: lightblue;
-}
-
-.left-capsule {
-    float:left;
-    border: 2px solid;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border-top-left-radius: 25px;
-    border-bottom-left-radius: 25px;
-    border-color: lightgreen;
-}
-
-.right-capsule {
     border: 2px solid;
     color: black;
     padding: 10px 20px;
@@ -118,13 +112,11 @@
 .right-capsule-text {
     padding-top: 10px;
     text-align: center;
-    font-size: small;
 }
 
-.left-capsule-text {
+.questionOption-text {
     padding-top: 10px;
     text-align: center;
-    font-size: small;
 }
 
 .abc {
