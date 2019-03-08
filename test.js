@@ -52,7 +52,6 @@ function initBoxWidthArray(questionId) {
 
 	var maxWidth = 0;
 	for (var no = 0; no < boxes.length; no++) {
-		console.log(".style.width: ", boxes[no].style.width);
 		if (maxWidth < boxes[no].clientWidth) {
 			maxWidth = boxes[no].clientWidth;
 		}
@@ -72,7 +71,7 @@ function initBoxWidthArray(questionId) {
 
 	containerDiv.style.width = ((maxWidth * 4) + 60) + "px";
 	var numOfOptions = boxes.length / 3;
-	containerDiv.style.height = ((boxes[0].clientHeight * numOfOptions) + (10*numOfOptions)) + "px";
+	containerDiv.style.height = ((boxes[0].clientHeight * numOfOptions) + (10 * numOfOptions)) + "px";
 }
 
 function initAnswerDiv(questionId) {
@@ -126,7 +125,11 @@ function initDestinationAnswerContainerArray(questionId) {
 
 function startDragDrop(e, questionId) {
 
+	if (currentDragQuestion)
+		return;
+
 	currentDragQuestion = questionId;
+
 	var containerDivId = containerDivPrefix + questionId;
 	var dragContentDivId = dragContentContainerPrefix + questionId;
 

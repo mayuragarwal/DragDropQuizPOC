@@ -1,7 +1,6 @@
 .dragContainer {
 	margin: 20px;
 	padding: 3px;
-	-moz-user-select: no;
 }
 
 .answerDiv {
@@ -68,4 +67,12 @@
 
 .questionOption-text {
 	text-align: center;
+}
+
+.zigzag-right {
+    background: linear-gradient(-137deg, #e8117f 6px, transparent 0) 0 5px, linear-gradient(320deg, #e8117f 5px, #fff 0) 0 5px;
+}
+
+.zigzag-left {
+    background: linear-gradient(-135deg, #e8117f 5px, transparent 0) 0 5px, linear-gradient(135deg, #e8117f 5px, #fff 0) 0 5px;
 }
