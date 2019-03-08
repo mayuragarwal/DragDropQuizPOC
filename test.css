@@ -1,98 +1,71 @@
 .dragContainer {
-    min-width:500px;
-    min-height:200px;
-    margin:20px;
-    padding:3px;
-    -moz-user-select:no;
+	margin: 20px;
+	padding: 3px;
+	-moz-user-select: no;
 }
 
 .answerDiv {
-    float:right;	
-}
-
-.answerOptionContainer {
-    margin-bottom:10px;
-}
-
-.box {
-    border: 2px solid;
-}
-
-.dragDropAnswerBox {
-    cursor:pointer;
-    
-    min-width:50px;
-    padding: 10px;
-    line-height:20px;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-color: lightblue;
+    float: right;
 }
 
 .questionDiv {
-    float:left;
-    min-width: 150px;
+	float: left;
 }
 
-.questionOptionContainer {	
-    min-width:100px;
-    line-height:20px;
-    margin-bottom:10px;
+.questionOptionContainer {
+	margin-bottom: 10px;
+}
+
+.answerOptionContainer {
+	margin-bottom: 10px;
+}
+
+.box {
+	border: 2px solid;
+	padding: 10px;
+	line-height: 20px;
+	min-height: 20px;
+	min-width: 30px;
+}
+
+.dragDropAnswerBox {
+	cursor: pointer;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+	border-color: lightblue;
 }
 
 .staticQuestionBox {
-    float:left;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border-top-left-radius: 25px;
-    border-bottom-left-radius: 25px;
-    border-color: lightgreen;
+	float: left;
+	border-top-left-radius: 25px;
+	border-bottom-left-radius: 25px;
+	border-color: lightgreen;
 }
 
-.destinationAnswerContainer .emptyQuestionBox {	
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-
-    cursor: pointer;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-color: lightgrey;
-    min-height: 20px;
-    min-width: 30px;
+.destinationAnswerContainer .emptyQuestionBox {
+	display: inline-block;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+	border-color: lightgrey;
 }
 
 .destinationAnswerContainer .dragDropAnswerBox {
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-
-    cursor: pointer;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    min-height: 20px;
-    min-width: 30px;
-    border-color: lightblue;
+	display: inline-block;
+	cursor: pointer;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+	border-color: lightblue;
 }
 
 .dragContentContainer {
-    position:absolute;
-    display:none;
+	position: absolute;
+	display: none;
 }
 
 .answerOption-text {
-    padding-top: 10px;
-    text-align: center;
+	text-align: center;
 }
 
 .questionOption-text {
-    padding-top: 10px;
-    text-align: center;
+	text-align: center;
 }
