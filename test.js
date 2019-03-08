@@ -3,14 +3,14 @@ var lockedAfterDrag = false;	/* Lock items after they have been dragged, i.e. th
 var dragContent = false;
 var dragSource = false;
 var dragDropTimer = -1;
-var destinationObjArray = new Array();
+var destinationAnswerContainerArray = new Array();
 var destination = false;
 var dragSourceParent = false;
 var dragSourceNextSibling = false;
-var sourceObjectArray = new Array();
+var answerDivArray = new Array();
 
 var containerDivPrefix = "dragContainer-";
-var dragContentDivPrefix = "dragContent-";
+var dragContentContainerPrefix = "dragContentContainer-";
 var questionDivPrefix = "questionDiv-";
 var answerDivPrefix = "answerDiv-";
 
@@ -22,31 +22,43 @@ window.onload = function () {
 };
 
 function initDragDropScript(questionId) {
+	initContainerDiv(questionId);
+	initAnswerDiv(questionId);
 
+	initAnswerDivArray(questionId);
+	initDestinationAnswerContainerArray(questionId);
+}
+
+function initContainerDiv(questionId) {
 	var containerDivId = containerDivPrefix + questionId;
-	var dragContentDivId = dragContentDivPrefix + questionId;
-	var questionDivId = questionDivPrefix + questionId;
+	var containerDiv = document.getElementById(containerDivId);
+	containerDiv.onmouseup = function (e) {
+		dragDropEnd(questionId);
+	};
+	containerDiv.onmousemove = function (e) {
+		dragDropMove(e, questionId);
+	};
+}
+
+function initAnswerDiv(questionId) {
+
 	var answerDivId = answerDivPrefix + questionId;
-
-	console.log('Inside initDragDropScript');
-
-	var containerDivRect = document.getElementById(containerDivId).getBoundingClientRect();
-
 	var answerDiv = document.getElementById(answerDivId);
 	answerDiv.onselectstart = cancelEvent;
 	var divs = answerDiv.getElementsByTagName('div');
-	var answers = new Array();
-
 	for (var no = 0; no < divs.length; no++) {
-
 		if (hasClass(divs[no], 'dragDropAnswerBox')) {
 			divs[no].onmousedown = function (e) {
-				initDragDrop(e, questionId);
+				startDragDrop(e, questionId);
 			};
-			answers[answers.length] = divs[no];
 		}
 	}
+}
 
+function initAnswerDivArray(questionId) {
+
+	var answerDivId = answerDivPrefix + questionId;
+	var answerDiv = document.getElementById(answerDivId);
 	var sourceObj = new Array();
 	sourceObj['qid'] = questionId;
 	sourceObj['obj'] = answerDiv;
@@ -54,40 +66,34 @@ function initDragDropScript(questionId) {
 	sourceObj['top'] = getTopPos(answerDiv);
 	sourceObj['width'] = answerDiv.offsetWidth;
 	sourceObj['height'] = answerDiv.offsetHeight;
-	sourceObjectArray[sourceObjectArray.length] = sourceObj;
+	answerDivArray[answerDivArray.length] = sourceObj;
+}
 
+function initDestinationAnswerContainerArray(questionId) {
+
+	var questionDivId = questionDivPrefix + questionId;
 	var questionDiv = document.getElementById(questionDivId);
 	questionDiv.onselectstart = cancelEvent;
 	var divs = questionDiv.getElementsByTagName('div');
-
 	for (var no = 0; no < divs.length; no++) {
-		if (hasClass(divs[no], 'destinationQuestionBox')) {
-			var index = destinationObjArray.length;
-			destinationObjArray[index] = new Array();
-			destinationObjArray[index]['qid'] = questionId;
-			destinationObjArray[index]['obj'] = divs[no];
-			destinationObjArray[index]['left'] = getLeftPos(divs[no])
-			destinationObjArray[index]['top'] = getTopPos(divs[no])
-			destinationObjArray[index]['width'] = divs[no].offsetWidth;
-			destinationObjArray[index]['height'] = divs[no].offsetHeight;
+		if (hasClass(divs[no], 'destinationAnswerContainer')) {
+			var index = destinationAnswerContainerArray.length;
+			destinationAnswerContainerArray[index] = new Array();
+			destinationAnswerContainerArray[index]['qid'] = questionId;
+			destinationAnswerContainerArray[index]['obj'] = divs[no];
+			destinationAnswerContainerArray[index]['left'] = getLeftPos(divs[no]);
+			destinationAnswerContainerArray[index]['top'] = getTopPos(divs[no]);
+			destinationAnswerContainerArray[index]['width'] = divs[no].offsetWidth;
+			destinationAnswerContainerArray[index]['height'] = divs[no].offsetHeight;
 		}
 	}
-
-	var containerDiv = document.getElementById(containerDivId);
-	containerDiv.onmouseup = function (e) {
-		dragDropEnd(e, questionId);
-	};
-	containerDiv.onmousemove = function (e) {
-		dragDropMove(e, questionId);
-	};
 }
 
-function initDragDrop(e, questionId) {
-	console.log('Inside initDragDrop');
+function startDragDrop(e, questionId) {
 
 	currentDragQuestion = questionId;
 	var containerDivId = containerDivPrefix + questionId;
-	var dragContentDivId = dragContentDivPrefix + questionId;
+	var dragContentDivId = dragContentContainerPrefix + questionId;
 
 	// if (lockedAfterDrag && e.currentTarget.parentNode.parentNode.id == questionDivId)
 	// 	return;
@@ -101,9 +107,12 @@ function initDragDrop(e, questionId) {
 	dragSource = e.currentTarget;
 	dragSourceParent = e.currentTarget.parentNode;
 
-	if (hasClass(dragSourceParent, "destinationQuestionBox")) {
+	if (hasClass(dragSourceParent, "destinationAnswerContainer")) {
 		// restore empty div on question side
-		dragSourceParent.innerHTML = `<div class='emptyQuestionBox ${questionId}'></div>`;
+		dragSourceParent.innerHTML = "";
+		var emptyQuestionBoxDiv = document.createElement("div");
+		emptyQuestionBoxDiv.className = `emptyQuestionBox box ${questionId}`;
+		dragSourceParent.appendChild(emptyQuestionBoxDiv);
 	}
 
 	dragSourceNextSibling = false;
@@ -124,10 +133,8 @@ function timeoutBeforeDrag(questionId) {
 		return;
 	}
 
-	console.log('Inside timeoutBeforeDrag');
-
 	if (dragDropTimer >= 10) {
-		var dragContentDivId = dragContentDivPrefix + questionId;
+		var dragContentDivId = dragContentContainerPrefix + questionId;
 		var dragContentDiv = document.getElementById(dragContentDivId);
 		dragContentDiv.style.display = 'block';
 		dragContentDiv.innerHTML = '';
@@ -146,7 +153,7 @@ function dragDropMove(e, questionId) {
 	}
 
 	var containerDivId = containerDivPrefix + questionId;
-	var dragContentDivId = dragContentDivPrefix + questionId;
+	var dragContentDivId = dragContentContainerPrefix + questionId;
 	var dragContentDiv = document.getElementById(dragContentDivId);
 
 	var containerDivRect = document.getElementById(containerDivId).getBoundingClientRect();
@@ -158,31 +165,38 @@ function dragDropMove(e, questionId) {
 	dragContentDiv.style.left = Math.min(e.clientX, maxScrollLeft) + 'px';
 	dragContentDiv.style.top = Math.min(e.clientY, maxScrollTop) + 'px';
 
+	trySetDestinationForDrop(e, questionId);
+
+	return false;
+}
+
+function trySetDestinationForDrop(e, questionId) {
+
+	destination = false;
+	var objFound = false;
+	
 	var dragWidth = dragSource.offsetWidth;
 	var dragHeight = dragSource.offsetHeight;
-
-	var objFound = false;
 
 	var mouseX = e.clientX;
 	var mouseY = e.clientY;
 
-	destination = false;
-	for (var no = 0; no < destinationObjArray.length; no++) {
-		if (destinationObjArray[no]['qid'] != questionId)
+	for (var no = 0; no < destinationAnswerContainerArray.length; no++) {
+		if (destinationAnswerContainerArray[no]['qid'] != questionId)
 			continue;
 
-		var left = destinationObjArray[no]['left'];
-		var top = destinationObjArray[no]['top'];
-		var width = destinationObjArray[no]['width'];
-		var height = destinationObjArray[no]['height'];
+		var left = destinationAnswerContainerArray[no]['left'];
+		var top = destinationAnswerContainerArray[no]['top'];
+		var width = destinationAnswerContainerArray[no]['width'];
+		var height = destinationAnswerContainerArray[no]['height'];
 
-		var subs = destinationObjArray[no]['obj'].getElementsByTagName('div');
+		var subs = destinationAnswerContainerArray[no]['obj'].getElementsByTagName('div');
 		// Check if question destination is suitable for dropping answer div
 		if (!objFound && subs.length == 1 && hasClass(subs[0], "emptyQuestionBox")) {
 			if (mouseX < (left / 1 + width / 1) && (mouseX + dragWidth / 1) > left
 				&& mouseY < (top / 1 + height / 1) && (mouseY + dragHeight / 1) > top) {
 
-				destination = destinationObjArray[no]['obj'];
+				destination = destinationAnswerContainerArray[no]['obj'];
 				objFound = true;
 				break;
 			}
@@ -192,7 +206,7 @@ function dragDropMove(e, questionId) {
 	// if question destination is not found and mouse is moved inside answer div,
 	// then user is trying to drop in answer div back. Set destination to answer div. 
 	if (!objFound) {
-		var sourceObj = sourceObjectArray.find(obj => obj['qid'] == questionId);
+		var sourceObj = answerDivArray.find(obj => obj['qid'] == questionId);
 		var left = sourceObj['left'];
 		var top = sourceObj['top'];
 		var width = sourceObj['width'];
@@ -211,44 +225,29 @@ function dragDropMove(e, questionId) {
 			}
 		}
 	}
-
-	return false;
 }
 
-function dragDropEnd(e, questionId) {
+function dragDropEnd(questionId) {
 	if (dragDropTimer < 10) {
 		dragDropTimer = -1;
 		return;
 	}
 
-	console.log('Inside dragDropEnd');
-
-	var answerDivId = answerDivPrefix + questionId;
-	var dragContentDivId = dragContentDivPrefix + questionId;
+	var dragContentDivId = dragContentContainerPrefix + questionId;
 	var dragContentDiv = document.getElementById(dragContentDivId);
 
 	dragContentDiv.style.display = 'none';
 	if (destination) {
-		console.log("destination", destination);
-		if (hasClass(destination, "destinationQuestionBox")) {
+		if (hasClass(destination, "destinationAnswerContainer")) {
 			destination.innerHTML = "";
 		}
 		destination.appendChild(dragSource);
-		//removeClass(destination, 'dragContentOver');
-		//addClass(destination, 'destinationQuestionBox');
-		//addClass(destination, 'answerDiv');
-
-		// if (destination.id && destination.id == answerDivId) {
-		// 	addClass(dragSource, 'dragDropAnswerBox');
-		// }
 	} else {
 		if (dragSourceNextSibling) {
-			console.log("dragSourceNextSibling", dragSourceNextSibling);
 			dragSourceNextSibling.parentNode.insertBefore(dragSource, dragSourceNextSibling);
 		}
 		else {
-			console.log("dragSourceParent", dragSourceParent);
-			if (hasClass(dragSourceParent, "destinationQuestionBox")) {
+			if (hasClass(dragSourceParent, "destinationAnswerContainer")) {
 				dragSourceParent.innerHTML = "";
 			}
 			dragSourceParent.appendChild(dragSource);
@@ -263,7 +262,6 @@ function dragDropEnd(e, questionId) {
 }
 
 function getTopPos(inputObj) {
-	console.log('Inside getTopPos');
 	if (!inputObj || !inputObj.offsetTop)
 		return 0;
 	var returnValue = inputObj.offsetTop;
@@ -272,7 +270,6 @@ function getTopPos(inputObj) {
 }
 
 function getLeftPos(inputObj) {
-	console.log('Inside getLeftPos');
 	if (!inputObj || !inputObj.offsetLeft)
 		return 0;
 	var returnValue = inputObj.offsetLeft;
@@ -281,7 +278,6 @@ function getLeftPos(inputObj) {
 }
 
 function cancelEvent() {
-	console.log('Inside cancelEvent');
 	return false;
 }
 

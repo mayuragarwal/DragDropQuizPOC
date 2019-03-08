@@ -14,9 +14,13 @@
     margin-bottom:10px;
 }
 
+.box {
+    border: 2px solid;
+}
+
 .dragDropAnswerBox {
     cursor:pointer;
-    border: 2px solid;
+    
     min-width:50px;
     padding: 10px;
     line-height:20px;
@@ -38,7 +42,6 @@
 
 .staticQuestionBox {
     float:left;
-    border: 2px solid;
     color: black;
     padding: 10px 20px;
     text-align: center;
@@ -49,8 +52,7 @@
     border-color: lightgreen;
 }
 
-.destinationQuestionBox .emptyQuestionBox {	
-    border: 2px solid;
+.destinationAnswerContainer .emptyQuestionBox {	
     color: black;
     padding: 10px 20px;
     text-align: center;
@@ -65,8 +67,7 @@
     min-width: 30px;
 }
 
-.destinationQuestionBox .dragDropAnswerBox {
-    border: 2px solid;
+.destinationAnswerContainer .dragDropAnswerBox {
     color: black;
     padding: 10px 20px;
     text-align: center;
@@ -81,7 +82,7 @@
     border-color: lightblue;
 }
 
-.dragContent {
+.dragContentContainer {
     position:absolute;
     display:none;
 }
