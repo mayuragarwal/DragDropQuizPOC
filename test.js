@@ -122,13 +122,17 @@ function initDestinationAnswerContainerArray(questionId) {
 function startDragDrop(e, questionId) {
 	if (currentDragQuestion) return;
 	currentDragQuestion = questionId;
-	var containerDivId = containerDivPrefix + questionId;
-	var dragContentDivId = dragContentContainerPrefix + questionId;
 
+	var dragContentDivId = dragContentContainerPrefix + questionId;
 	var dragContentDiv = document.getElementById(dragContentDivId);
+
+	var containerDivId = containerDivPrefix + questionId;
 	var containerDiv = document.getElementById(containerDivId);
-	dragContentDiv.style.left = e.clientX + containerDiv.scrollLeft + "px";
-	dragContentDiv.style.top = e.clientY + containerDiv.scrollTop + "px";
+	var box = containerDiv.getElementsByClassName("box")[0];
+
+	dragContentDiv.style.left = e.clientX - (box.offsetWidth / 2) + "px";
+	dragContentDiv.style.top = e.clientY - (box.offsetHeight / 2) + "px";
+
 	dragSource = e.currentTarget;
 	dragSourceParent = e.currentTarget.parentNode;
 
@@ -178,15 +182,33 @@ function dragDropMove(e, questionId) {
 	}
 
 	var containerDivId = containerDivPrefix + questionId;
+	var containerDivRect = document.getElementById(containerDivId).getBoundingClientRect();
+	var questionDivId = questionDivPrefix + questionId;
+	var questionDivRect = document.getElementById(questionDivId).getBoundingClientRect();
+	var answerDivId = answerDivPrefix + questionId;
+	var answerDivRect = document.getElementById(answerDivId).getBoundingClientRect();
+
+	var minX = questionDivRect.left + questionDivRect.width / 2;
+	var maxX = Math.min(answerDivRect.left + answerDivRect.width / 2, containerDivRect.right);
+
+	if (e.clientX < minX || e.clientX > maxX)
+		return;
+
+	var minY = containerDivRect.top + 10;
+	var maxY = containerDivRect.bottom - 10;
+
+	if (e.clientY < minY || e.clientY > maxY)
+		return;
+
 	var dragContentDivId = dragContentContainerPrefix + questionId;
 	var dragContentDiv = document.getElementById(dragContentDivId);
-	var containerDivRect = document.getElementById(containerDivId).getBoundingClientRect();
 	var dragContentDivRect = dragContentDiv.getBoundingClientRect();
-	var maxScrollTop = containerDivRect.top + containerDivRect.height - dragContentDivRect.height;
-	var maxScrollLeft = containerDivRect.left + containerDivRect.width - dragContentDivRect.width;
-	dragContentDiv.style.left = Math.min(e.clientX, maxScrollLeft) + "px";
-	dragContentDiv.style.top = Math.min(e.clientY, maxScrollTop) + "px";
+
+	dragContentDiv.style.left = e.clientX - (dragContentDivRect.width / 2) + "px";
+	dragContentDiv.style.top = e.clientY - (dragContentDivRect.height / 2) + "px";
+
 	trySetDestinationForDrop(e, questionId);
+
 	return false;
 }
 
